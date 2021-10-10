@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "debugplus",
+  "version": "${version}",
+  "name": "Debug Plus",
+  "description": "It's just normal debugging, but with a bit more",
+  "authors": [
+    "PR0CESS"
+  ],
+  "contact": {},
+  "license": "LGPL-3.0",
+  "icon": "assets/debugPlus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ca.fxco.debugplus.DebugPlus"
+    ]
+  },
+  "mixins": [
+    "debugPlus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.1",
+    "minecraft": "1.17.1"
+  }
+}
