@@ -11,10 +11,11 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class OverlayRendererGoatJump extends OverlayRendererBase {
 
-    private static final Color4f WhiteColor = new Color4f(1f,1f,1f,1f);
+    private static final Color4f WhiteColor = new Color4f(1f,1f,1f,0.5f);
 
     private static final List<Box> BoxList = new ArrayList<>();
 
@@ -25,24 +26,26 @@ public class OverlayRendererGoatJump extends OverlayRendererBase {
     }
 
     @Override
-    public boolean shouldRender(MinecraftClient mc) {return RendererToggles.DEBUG_COMPARATOR_UPDATES.getBooleanValue();}
+    public boolean shouldRender(MinecraftClient mc) {return RendererToggles.DEBUG_GOAT_JUMPING.getBooleanValue();}
 
     @Override
     public boolean needsUpdate(Entity entity, MinecraftClient mc) {
-        return true;
+        return BoxList.size() > 0;
     }
 
     @Override
     public void update(Vec3d cameraPos, Entity entity, MinecraftClient mc) {
         RenderObjectBase renderLines = this.renderObjects.get(1);
         BUFFER_2.begin(renderLines.getGlMode(), VertexFormats.POSITION_COLOR);
-        for (int i = BoxList.size() - 1; i >= 0; i--) {
-            Box box = BoxList.get(i);
+        List<Box> boxList = new ArrayList<>(BoxList);
+        for (ListIterator<Box> it = boxList.listIterator(); it.hasNext(); ) {
+            Box box = it.next();
             if (MiscUtils.isRenderWithinRange(box, this.lastUpdatePos, (mc.options.viewDistance + 6) * 16)) {
-                box = box.offset(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-                fi.dy.masa.malilib.render.RenderUtils.drawBoxAllEdgesBatchedLines(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, WhiteColor, BUFFER_2);
+                Box bb = box.offset(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+                fi.dy.masa.malilib.render.RenderUtils.drawBoxAllEdgesBatchedLines(bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY, bb.maxZ, WhiteColor, BUFFER_2);
             }
         }
+        boxList.clear();
         BUFFER_2.end();
         renderLines.uploadData(BUFFER_2);
     }

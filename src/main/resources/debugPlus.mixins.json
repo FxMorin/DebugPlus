@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "AbstractBlockState_shapeUpdatesMixin",
+    "LongJumpTask_debugMixin",
     "ServerWorld_randomTicksMixin",
     "World_comparatorUpdatesMixin",
     "clientCommands.ClientPlayerEntity_clientCommandsMixin",
