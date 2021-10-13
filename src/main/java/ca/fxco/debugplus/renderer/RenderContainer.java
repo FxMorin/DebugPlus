@@ -1,16 +1,17 @@
 package ca.fxco.debugplus.renderer;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
+import fi.dy.masa.malilib.util.JsonUtils;
+import fi.dy.masa.malilib.util.PositionUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
-import fi.dy.masa.malilib.util.JsonUtils;
-import fi.dy.masa.malilib.util.PositionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RenderContainer {
     public static final RenderContainer INSTANCE = new RenderContainer();
@@ -22,7 +23,9 @@ public class RenderContainer {
     private RenderContainer() {
         this.addRenderer(new OverlayRendererBox());
         this.addRenderer(new OverlayRendererShapeUpdates());
+        this.addRenderer(new OverlayRendererComparatorUpdates());
         this.addRenderer(new OverlayRendererRandomTicks());
+        this.addRenderer(new OverlayRendererGoatJump());
     }
 
     private void addRenderer(OverlayRendererBase renderer) {

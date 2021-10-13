@@ -1,67 +1,54 @@
 package ca.fxco.debugplus.commands;
 
+import ca.fxco.debugplus.DebugPlus;
 import ca.fxco.debugplus.config.RendererToggles;
 import ca.fxco.debugplus.renderer.OverlayRendererBox;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import fi.dy.masa.malilib.util.Color4f;
+import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.world.ScheduledTick;
 
 import java.awt.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
-public class ClientCommands {
-    private static final MinecraftClient mc = MinecraftClient.getInstance();
+import static ca.fxco.debugplus.ClientCommands.sendToPlayer;
 
-    public static final String PREFIX = "debugplus";
-    public static final String TXT_PREFIX = "§8[§2DebugPlus§8] §f";
+public class ScheduledTicksCommand extends baseCommand {
 
-    public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-        LiteralArgumentBuilder<ServerCommandSource> builder = CommandManager.literal(PREFIX);
-        builder.then(
-                CommandManager.literal("scheduled-ticks")
-                        .then(CommandManager.literal("blocks")
-                                .then(CommandManager.literal("clear").executes((c) -> {
-                                    OverlayRendererBox.clear(OverlayRendererBox.RENDER_MODE.SCHEDULED_BLOCK_TICKS);
-                                    return 1;
-                                }))
-                                .executes((c) -> executeScheduleTicks(true)))
-                        .then(CommandManager.literal("fluids")
-                                .then(CommandManager.literal("clear").executes((c) -> {
-                                    OverlayRendererBox.clear(OverlayRendererBox.RENDER_MODE.SCHEDULED_FLUID_TICKS);
-                                    return 1;
-                                }))
-                                .executes((c) -> executeScheduleTicks(false)))
-                .then(CommandManager.literal("help").executes((context) -> helpCommand())));
-        dispatcher.register(builder);
-    }
+    public ScheduledTicksCommand(String name) {super(name);}
 
-    public static int helpCommand() {
-        sendToPlayer("§2Help Menu§f\n" +
-                " help - TODO, add other commands to help menu!");
-        return 1;
+    public void register(LiteralArgumentBuilder<ServerCommandSource> dispatcher) {
+        LiteralArgumentBuilder<ServerCommandSource> theCommand = CommandManager.literal(getName())
+                .then(CommandManager.literal("blocks")
+                        .then(CommandManager.literal("clear").executes((c) -> {
+                            OverlayRendererBox.clear(OverlayRendererBox.RENDER_MODE.SCHEDULED_BLOCK_TICKS);
+                            return 1;
+                        }))
+                        .executes((c) -> executeScheduleTicks(true)))
+                .then(CommandManager.literal("fluids")
+                        .then(CommandManager.literal("clear").executes((c) -> {
+                            OverlayRendererBox.clear(OverlayRendererBox.RENDER_MODE.SCHEDULED_FLUID_TICKS);
+                            return 1;
+                        }))
+                        .executes((c) -> executeScheduleTicks(false)));
+        dispatcher.then(theCommand);
     }
 
     public static int executeScheduleTicks(boolean blocks) {
-        ClientPlayerEntity player = mc.player;
+        ClientPlayerEntity player = DebugPlus.MC.player;
         if (RendererToggles.DEBUG_OVERLAY_BOX.getBooleanValue()) {
             OverlayRendererBox.clear(blocks ? OverlayRendererBox.RENDER_MODE.SCHEDULED_BLOCK_TICKS : OverlayRendererBox.RENDER_MODE.SCHEDULED_FLUID_TICKS);
-            ServerWorld world = mc.getServer().getWorld(player.world.getRegistryKey());
+            ServerWorld world = DebugPlus.MC.getServer().getWorld(player.world.getRegistryKey());
             AtomicInteger count = new AtomicInteger();
             AtomicLong lastTime = new AtomicLong(0L);
             AtomicLong currentColor = new AtomicLong(0L);
@@ -100,38 +87,8 @@ public class ClientCommands {
                 }
             }
         } else {
-            sendToPlayer("Debug Overlay Box should be enabled to use this command!");
+            sendToPlayer(StringUtils.translate("debugplus.commands.require.debugoverlaybox"));
         }
         return 1;
-    }
-
-    public static void sendToPlayer(String str) {
-        if (mc.player != null) {
-            mc.player.sendMessage(new LiteralText(TXT_PREFIX+str), false);
-        }
-    }
-
-    public static boolean isClientSideCommand(String[] args) {
-        return (args.length > 0 && PREFIX.equals(args[0]));
-    }
-
-    public static int executeCommand(StringReader reader) {
-        ClientPlayerEntity player = mc.player;
-        try {
-            return player.networkHandler.getCommandDispatcher().execute(reader, new FakeCommandSource(player));
-        } catch (Exception e) {
-            //TODO ADD Error message here (LOGGER)
-            return 1;
-        }
-    }
-
-    public static class FakeCommandSource extends ServerCommandSource {
-        public FakeCommandSource(ClientPlayerEntity player) {
-            super(player, player.getPos(), player.getRotationClient(), null, 0, player.getEntityName(), player.getName(), null, player);
-        }
-
-        public Collection<String> getPlayerNames() {
-            return mc.getNetworkHandler().getPlayerList().stream().map(e -> e.getProfile().getName()).collect(Collectors.toList());
-        }
     }
 }

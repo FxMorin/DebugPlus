@@ -1,6 +1,6 @@
 package ca.fxco.debugplus.mixin.clientCommands;
 
-import ca.fxco.debugplus.commands.ClientCommands;
+import ca.fxco.debugplus.ClientCommands;
 import com.mojang.brigadier.StringReader;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;

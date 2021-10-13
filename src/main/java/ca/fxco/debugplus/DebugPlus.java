@@ -4,6 +4,7 @@ import ca.fxco.debugplus.config.Configs;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,6 +13,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class DebugPlus implements ModInitializer {
+
+    public static final MinecraftClient MC = MinecraftClient.getInstance();
+
     public static final Logger logger = LogManager.getLogger(ModInfo.MOD_ID);
     public static boolean isRunningCarpet = false;
     public static boolean isRunningQuickCarpet = false;

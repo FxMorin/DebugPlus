@@ -1,7 +1,6 @@
 package ca.fxco.debugplus.config;
 
 import ca.fxco.debugplus.DebugPlus;
-import ca.fxco.debugplus.hotkeys.KeyCallbackRenderer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import fi.dy.masa.malilib.config.ConfigType;
@@ -9,16 +8,19 @@ import fi.dy.masa.malilib.config.IConfigBoolean;
 import fi.dy.masa.malilib.config.IConfigNotifiable;
 import fi.dy.masa.malilib.config.IHotkeyTogglable;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
+import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBooleanConfigWithMessage;
 import fi.dy.masa.malilib.hotkeys.KeybindMulti;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import org.jetbrains.annotations.Nullable;
 
-public enum RendererToggles implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
-    DEBUG_SHAPE_UPDATES                       ("debugShapeUpdateEnabled",     "", "Toggles a custom debug renderer to render shape updates", "Block Shape Updates"),
-    DEBUG_RANDOM_TICKS                       ("debugRandomTicksEnabled",     "", "Toggles a custom debug renderer to render random ticks", "Random Ticks"),
-
-    DEBUG_OVERLAY_BOX                         ("debugOverlayBox",                  "", "Toggle the Debug Box Rendering for PR0CESS","Debug Overlay Box");
+public enum RendererToggles implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean>
+{
+    DEBUG_SHAPE_UPDATES                  ("debugShapeUpdate",        "", "Renderer for Shape Updates", "Block Shape Updates"),
+    DEBUG_COMPARATOR_UPDATES             ("debugComparatorUpdate",   "", "Renderer for Comparator Updates", "Block Comparator Updates"),
+    DEBUG_RANDOM_TICKS                   ("debugRandomTicks",        "", "Renderer for Random Ticks", "Random Ticks"),
+    DEBUG_GOAT_JUMPING                   ("debugGoatJumping",        "", "Renderer for Goat Jumping","Goat Jumping"),
+    DEBUG_OVERLAY_BOX                    ("debugOverlayBox",         "", "Debug Box Renderer","Debug Overlay Box");
 
     private final String name;
     private final String prettyName;
@@ -39,7 +41,7 @@ public enum RendererToggles implements IHotkeyTogglable, IConfigNotifiable<IConf
         this.defaultValueBoolean = false;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
 
-        this.keybind.setCallback(new KeyCallbackRenderer(this));
+        this.keybind.setCallback(new KeyCallbackToggleBooleanConfigWithMessage(this));
     }
 
     @Override

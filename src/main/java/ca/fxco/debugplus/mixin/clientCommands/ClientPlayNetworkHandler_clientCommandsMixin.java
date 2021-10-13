@@ -1,6 +1,6 @@
 package ca.fxco.debugplus.mixin.clientCommands;
 
-import ca.fxco.debugplus.commands.ClientCommands;
+import ca.fxco.debugplus.ClientCommands;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.client.MinecraftClient;

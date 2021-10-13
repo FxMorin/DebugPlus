@@ -37,8 +37,12 @@ public class GuiConfigs extends GuiConfigsBase {
         }
     }
 
-    private int createButton(int x, int y, int width, ConfigGuiTab tab)
-    {
+    @Override
+    protected boolean useKeybindSearch() {
+        return GuiConfigs.tab == ConfigGuiTab.GENERIC || GuiConfigs.tab == ConfigGuiTab.RENDERER_HOTKEYS;
+    }
+
+    private int createButton(int x, int y, int width, ConfigGuiTab tab) {
         ButtonGeneric button = new ButtonGeneric(x, y, width, 20, tab.getDisplayName());
         button.setEnabled(GuiConfigs.tab != tab);
         this.addButton(button, new ButtonListener(tab, this));
@@ -56,13 +60,14 @@ public class GuiConfigs extends GuiConfigsBase {
     }
 
     @Override
-    public List<ConfigOptionWrapper> getConfigs()
-    {
+    public List<ConfigOptionWrapper> getConfigs() {
         List<? extends IConfigBase> configs;
         ConfigGuiTab tab = GuiConfigs.tab;
 
         if (tab == ConfigGuiTab.GENERIC) {
             configs = Configs.Generic.OPTIONS;
+        } else if (tab == ConfigGuiTab.RENDERER_TOGGLES) {
+            configs = ConfigUtils.createConfigWrapperForType(ConfigType.BOOLEAN, ImmutableList.copyOf(RendererToggles.values()));
         } else if (tab == ConfigGuiTab.RENDERER_HOTKEYS) {
             configs = ConfigUtils.createConfigWrapperForType(ConfigType.HOTKEY, ImmutableList.copyOf(RendererToggles.values()));
         } else {
@@ -72,20 +77,17 @@ public class GuiConfigs extends GuiConfigsBase {
         return ConfigOptionWrapper.createFor(configs);
     }
 
-    private static class ButtonListener implements IButtonActionListener
-    {
+    private static class ButtonListener implements IButtonActionListener {
         private final GuiConfigs parent;
         private final ConfigGuiTab tab;
 
-        public ButtonListener(ConfigGuiTab tab, GuiConfigs parent)
-        {
+        public ButtonListener(ConfigGuiTab tab, GuiConfigs parent) {
             this.tab = tab;
             this.parent = parent;
         }
 
         @Override
-        public void actionPerformedWithButton(ButtonBase button, int mouseButton)
-        {
+        public void actionPerformedWithButton(ButtonBase button, int mouseButton) {
             GuiConfigs.tab = this.tab;
 
             this.parent.reCreateListWidget(); // apply the new config width
@@ -96,6 +98,7 @@ public class GuiConfigs extends GuiConfigsBase {
 
     public enum ConfigGuiTab {
         GENERIC ("debugplus.gui.button.config_gui.generic"),
+        RENDERER_TOGGLES ("debugplus.gui.button.config_gui.renderer_toggles"),
         RENDERER_HOTKEYS ("debugplus.gui.button.config_gui.renderer_hotkeys");
 
         private final String translationKey;

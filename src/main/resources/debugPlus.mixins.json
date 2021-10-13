@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractBlockState_shapeUpdatesMixin",
     "ServerWorld_randomTicksMixin",
+    "World_comparatorUpdatesMixin",
     "clientCommands.ClientPlayerEntity_clientCommandsMixin",
     "clientCommands.ClientPlayNetworkHandler_clientCommandsMixin"
   ],

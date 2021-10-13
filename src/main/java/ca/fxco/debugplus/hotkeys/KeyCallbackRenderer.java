@@ -1,15 +1,7 @@
 package ca.fxco.debugplus.hotkeys;
 
-import ca.fxco.debugplus.config.RendererToggles;
-import ca.fxco.debugplus.renderer.OverlayRendererShapeUpdates;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
 import fi.dy.masa.malilib.config.IConfigBoolean;
-import fi.dy.masa.malilib.gui.GuiBase;
-import fi.dy.masa.malilib.hotkeys.IKeybind;
-import fi.dy.masa.malilib.hotkeys.KeyAction;
 import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBooleanConfigWithMessage;
-import fi.dy.masa.malilib.util.StringUtils;
 
 public class KeyCallbackRenderer extends KeyCallbackToggleBooleanConfigWithMessage {
     public KeyCallbackRenderer(IConfigBoolean config)
@@ -17,7 +9,7 @@ public class KeyCallbackRenderer extends KeyCallbackToggleBooleanConfigWithMessa
         super(config);
     }
 
-    @Override
+    /*@Override
     public boolean onKeyAction(KeyAction action, IKeybind key) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc != null && mc.player != null && super.onKeyAction(action, key)) {
@@ -34,5 +26,5 @@ public class KeyCallbackRenderer extends KeyCallbackToggleBooleanConfigWithMessa
             return true;
         }
         return false;
-    }
+    }*/
 }
