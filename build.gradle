@@ -12,6 +12,7 @@ group = project.maven_group
 repositories {
     maven { url 'https://masa.dy.fi/maven' }
     maven { url 'https://maven.terraformersmc.com/' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -20,7 +21,11 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    include "fi.dy.masa.malilib:malilib-fabric-${project.MC_VER}:${project.MALILIB_VER}"
     modImplementation "fi.dy.masa.malilib:malilib-fabric-${project.MC_VER}:${project.MALILIB_VER}"
+
+    include "com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}"
+    modImplementation "com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

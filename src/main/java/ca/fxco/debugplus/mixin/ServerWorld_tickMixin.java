@@ -19,6 +19,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
@@ -32,14 +33,14 @@ import java.util.*;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import static ca.fxco.debugplus.config.Configs.Generic.MOB_SEARCH_RADIUS;
+//import static ca.fxco.debugplus.config.Configs.Generic.MOB_SEARCH_RADIUS;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorld_tickMixin extends World {
 
 
-    protected ServerWorld_tickMixin(MutableWorldProperties mutableWorldProperties, RegistryKey<World> registryKey, DimensionType dimensionType, Supplier<Profiler> supplier, boolean bl, boolean bl2, long l) {
-        super(mutableWorldProperties, registryKey, dimensionType, supplier, bl, bl2, l);
+    protected ServerWorld_tickMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, RegistryEntry<DimensionType> registryEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed) {
+        super(properties, registryRef, registryEntry, profiler, isClient, debugWorld, seed);
     }
 
     @Inject(
@@ -48,7 +49,7 @@ public abstract class ServerWorld_tickMixin extends World {
     )
     public void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (DebugPlus.MC != null && DebugPlus.MC.player != null && (RendererToggles.DEBUG_MOB_TARGET.getBooleanValue() || RendererToggles.DEBUG_MOB_MEMORIES.getBooleanValue())) {
-            int radius = MOB_SEARCH_RADIUS.getIntegerValue();
+            int radius = 32;//MOB_SEARCH_RADIUS.getIntegerValue();
             List<MobEntity> entities = this.getEntitiesByClass(MobEntity.class, new Box(DebugPlus.MC.player.getX() - radius, DebugPlus.MC.player.getY() - radius, DebugPlus.MC.player.getZ() - radius, DebugPlus.MC.player.getX() + radius, DebugPlus.MC.player.getY() + radius, DebugPlus.MC.player.getZ() + radius), (e) -> true);
             if (entities.size() > 0) {
                 if (RendererToggles.DEBUG_MOB_TARGET.getBooleanValue()) {

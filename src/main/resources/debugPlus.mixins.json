@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "ca.fxco.debugplus.mixin",
   "compatibilityLevel": "JAVA_16",
+  "plugin": "ca.fxco.debugplus.utils.DebugPlusMixinConfigPlugin",
   "mixins": [
     "AbstractBlockState_shapeUpdatesMixin",
     "Brain_memoriesMixin",
