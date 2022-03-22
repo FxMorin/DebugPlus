@@ -7,13 +7,16 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import fi.dy.masa.malilib.util.Color4f;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class OverlayRendererShapeUpdates extends OverlayRendererBase {
 
@@ -72,13 +75,12 @@ public class OverlayRendererShapeUpdates extends OverlayRendererBase {
                 }
             }
         }
-
+        BUFFER_2.end();
+        renderLines.uploadData(BUFFER_2);
         for (Map.Entry<BlockPos, Integer> internalMap : map.entrySet()) {
             BlockPos blockPos = internalMap.getKey();
             Integer integer = internalMap.getValue();
             fi.dy.masa.malilib.render.RenderUtils.drawTextPlate(Collections.singletonList(String.valueOf(integer)), blockPos.getX()+0.5f, blockPos.getY()+0.5f, blockPos.getZ()+0.5f, 0.025f);
         }
-        BUFFER_2.end();
-        renderLines.uploadData(BUFFER_2);
     }
 }

@@ -1,6 +1,5 @@
 package ca.fxco.debugplus.renderer;
 
-import java.util.function.Supplier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
@@ -9,6 +8,8 @@ import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormatElement;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+
+import java.util.function.Supplier;
 
 public class RenderObjectVbo extends RenderObjectBase
 {
@@ -53,7 +54,7 @@ public class RenderObjectVbo extends RenderObjectBase
         }
 
         RenderSystem.setShader(this.getShader());
-        this.vertexBuffer.setShader(matrixStack.peek().getModel(), projMatrix, this.getShader().get());
+        this.vertexBuffer.setShader(matrixStack.peek().getPositionMatrix(), projMatrix, this.getShader().get());
 
         if (this.hasTexture)
         {

@@ -8,7 +8,9 @@ import com.google.gson.JsonPrimitive;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
-import fi.dy.masa.malilib.config.options.*;
+import fi.dy.masa.malilib.config.options.ConfigBoolean;
+import fi.dy.masa.malilib.config.options.ConfigHotkey;
+import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
 
@@ -24,12 +26,12 @@ public class Configs implements IConfigHandler {
 
         public static final ConfigHotkey  OPEN_CONFIG_GUI                 = new ConfigHotkey("openConfigGui", "R,C", "A hotkey to open the in-game Config GUI");
         public static final ConfigBoolean DEBUG_MESSAGES                  = new ConfigBoolean("debugMessages", false, "Enables some debug messages in the game console");
-        public static final ConfigBoolean RAINBOW_MODE                    = new ConfigBoolean("rainbowMode", false, "All colors are rainbow");
+        public static final ConfigInteger MOB_SEARCH_RADIUS               = new ConfigInteger("mobSearchRadius", 64, 8, 256,true,"Change the radius in which you get mob target/brain");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 OPEN_CONFIG_GUI,
                 DEBUG_MESSAGES,
-                RAINBOW_MODE
+                MOB_SEARCH_RADIUS
         );
 
         public static final List<ConfigHotkey> HOTKEY_LIST = ImmutableList.of(

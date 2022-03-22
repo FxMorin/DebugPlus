@@ -5,11 +5,12 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "AbstractBlockState_shapeUpdatesMixin",
+    "Brain_memoriesMixin",
+    "EntityRenderDispatcher_simulateMixin",
     "LongJumpTask_debugMixin",
     "ServerWorld_randomTicksMixin",
-    "World_comparatorUpdatesMixin",
-    "clientCommands.ClientPlayerEntity_clientCommandsMixin",
-    "clientCommands.ClientPlayNetworkHandler_clientCommandsMixin"
+    "ServerWorld_tickMixin",
+    "World_comparatorUpdatesMixin"
   ],
   "client": [
   ],

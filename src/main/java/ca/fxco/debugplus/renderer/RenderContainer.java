@@ -26,6 +26,9 @@ public class RenderContainer {
         this.addRenderer(new OverlayRendererComparatorUpdates());
         this.addRenderer(new OverlayRendererRandomTicks());
         this.addRenderer(new OverlayRendererGoatJump());
+        this.addRenderer(new OverlayRendererMobTarget());
+        this.addRenderer(new OverlayRendererMobTasks());
+        this.addRenderer(new OverlayRendererCollision());
     }
 
     private void addRenderer(OverlayRendererBase renderer) {

@@ -14,12 +14,17 @@ import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
 import org.jetbrains.annotations.Nullable;
 
-public enum RendererToggles implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean>
-{
+public enum RendererToggles implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean> {
     DEBUG_SHAPE_UPDATES                  ("debugShapeUpdate",        "", "Renderer for Shape Updates", "Block Shape Updates"),
     DEBUG_COMPARATOR_UPDATES             ("debugComparatorUpdate",   "", "Renderer for Comparator Updates", "Block Comparator Updates"),
     DEBUG_RANDOM_TICKS                   ("debugRandomTicks",        "", "Renderer for Random Ticks", "Random Ticks"),
     DEBUG_GOAT_JUMPING                   ("debugGoatJumping",        "", "Renderer for Goat Jumping","Goat Jumping"),
+    DEBUG_MOB_TARGET                     ("debugMobTarget",          "", "Renderer for Mob Target","Mob Target"),
+    DEBUG_MOB_MEMORIES                   ("debugMobMemories",        "", "Renderer for Mob Memories","Mob Memories"),
+    DEBUG_MOB_TASKS                      ("debugMobTasks",           "", "Renderer for Mob Tasks","Mob Tasks"),
+    DEBUG_MOB_SENSORS                    ("debugMobSensors",         "", "Renderer for Mob Sensors","Mob Sensors"),
+    DEBUG_MOB_ACTIVITIES                 ("debugMobActivities",      "", "Renderer for Mob Activities","Mob Activities"),
+    DEBUG_ENTITY_COLLISION               ("debugEntityCollision",    "", "Renderer for Entity Collisions Prediction","Entity Collision Prediction"),
     DEBUG_OVERLAY_BOX                    ("debugOverlayBox",         "", "Debug Box Renderer","Debug Overlay Box");
 
     private final String name;

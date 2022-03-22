@@ -14,5 +14,7 @@
   "debugplus.commands.helpmenu": "§2Help Menu§f\n",
 
   "debugplus.command.help.desc": "You are here",
-  "debugplus.command.scheduled-ticks.desc": "Allows you to see scheduled ticks"
+  "debugplus.command.scheduled-ticks.desc": "Allows you to see scheduled ticks",
+
+  "debugplus.label.stack_instance.id": "§7Instance ID: §b%s"
 }

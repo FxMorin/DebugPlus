@@ -1,22 +1,17 @@
 package ca.fxco.debugplus.renderer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Shader;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class OverlayRendererBase implements IOverlayRenderer {
     protected static final BufferBuilder BUFFER_1 = new BufferBuilder(2097152);
@@ -24,7 +19,7 @@ public abstract class OverlayRendererBase implements IOverlayRenderer {
 
     protected final List<RenderObjectBase> renderObjects = new ArrayList<>();
     protected boolean renderThrough = false;
-    protected float glLineWidth = 1f;
+    protected float glLineWidth = 1.5f;
     protected BlockPos lastUpdatePos = BlockPos.ORIGIN;
     private Vec3d updateCameraPos = Vec3d.ZERO;
 
